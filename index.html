@@ -104,13 +104,12 @@
     </div>
   </div>
   <!-- Mobile Dropdown -->
-  <div id="mobile-menu" class="hidden md:hidden flex flex-col bg-[#161b22] text-center space-y-3 py-3">
-    <a href="#home" class="text-white font-semibold">Home</a>
-    <a href="#skills" class="text-white font-semibold">Skills</a>
-    <a href="#projects" class="text-white font-semibold">Projects</a>
-    <a href="#contact" class="text-white font-semibold">Contact</a>
-  </div>
-</nav>
+<div id="mobile-menu" class="hidden flex-col bg-[#161b22] text-center space-y-3 py-3">
+  <a href="#home" class="text-white font-semibold">Home</a>
+  <a href="#skills" class="text-white font-semibold">Skills</a>
+  <a href="#projects" class="text-white font-semibold">Projects</a>
+  <a href="#contact" class="text-white font-semibold">Contact</a>
+</div>
 
 
   <!-- Hero Section -->
@@ -243,34 +242,48 @@
 
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
-    AOS.init({ duration: 1200, once: true });
+  AOS.init({ duration: 1200, once: true });
 
-    // Mobile menu toggle
-    const menuToggle = document.getElementById("menu-toggle");
-    const mobileMenu = document.getElementById("mobile-menu");
+  // Mobile menu toggle
+  const menuToggle = document.getElementById("menu-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
 
-    menuToggle.addEventListener("click", () => {
-      menuToggle.classList.toggle("active");
-      mobileMenu.classList.toggle("hidden");
+  menuToggle.addEventListener("click", () => {
+    menuToggle.classList.toggle("active");
+    mobileMenu.classList.toggle("hidden");
+    if (!mobileMenu.classList.contains("hidden")) {
+      mobileMenu.classList.add("flex");
+    } else {
+      mobileMenu.classList.remove("flex");
+    }
+  });
+
+  // Close mobile menu when a link is clicked
+  mobileMenu.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      mobileMenu.classList.add("hidden");
+      mobileMenu.classList.remove("flex");
+      menuToggle.classList.remove("active");
     });
+  });
 
-    // 3D Hover tilt effect for all cards
-    document.querySelectorAll(".hover-tilt").forEach(card => {
-      card.addEventListener("mousemove", e => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * 10;
-        const rotateY = ((x - centerX) / centerX) * 10;
-        card.style.transform = `rotateX(${-rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-      });
-      card.addEventListener("mouseleave", () => {
-        card.style.transform = "rotateX(0) rotateY(0) scale(1)";
-      });
+  // 3D Hover tilt effect
+  document.querySelectorAll(".hover-tilt").forEach(card => {
+    card.addEventListener("mousemove", e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * 10;
+      const rotateY = ((x - centerX) / centerX) * 10;
+      card.style.transform = `rotateX(${-rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
     });
-  </script>
+    card.addEventListener("mouseleave", () => {
+      card.style.transform = "rotateX(0) rotateY(0) scale(1)";
+    });
+  });
+</script>
 </body>
 
 </html>
